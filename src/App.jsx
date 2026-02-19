@@ -1,8 +1,11 @@
-import './App.css'
+import Navigation from './components/Navigation/Navigation.jsx';
+import Logo from './components/Logo/Logo.jsx';
 
 function App() {
   return (
-    <div className='App'>
+    <div>
+      <Navigation />
+      <Logo />
     </div>
   )
 }
