@@ -7,7 +7,6 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,15 +14,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.form {
+  background: radial-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.15) 30%, rgba(255, 255, 255, 0.3) 32%, rgba(255, 255, 255, 0) 33%) 0px 0px / 470px 470px, radial-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.1) 11%, rgba(255, 255, 255, 0.3) 13%, rgba(255, 255, 255, 0) 14%) 0px 0px / 970px 970px, radial-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.2) 17%, rgba(255, 255, 255, 0.43) 19%, rgba(255, 255, 255, 0) 20%) 0px 110px / 410px 410px, radial-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.2) 11%, rgba(255, 255, 255, 0.4) 13%, rgba(255, 255, 255, 0) 14%) -130px -170px / 610px 610px, radial-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.2) 11%, rgba(255, 255, 255, 0.4) 13%, rgba(255, 255, 255, 0) 14%) 130px 370px / 530px 530px, radial-gradient(rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.1) 11%, rgba(255, 255, 255, 0.2) 13%, rgba(255, 255, 255, 0) 14%) 0px 0px / 730px 730px, linear-gradient(45deg, rgb(52, 55, 2) 0%, rgb(24, 69, 0) 20%, rgb(24, 117, 70) 30%, rgb(0, 103, 130) 40%, rgb(11, 18, 132) 50%, rgb(118, 14, 161) 60%, rgb(131, 9, 110) 70%, rgb(132, 11, 42) 80%, rgb(177, 62, 18) 90%, rgb(226, 116, 18) 100%) 0% 0% / 100% 100% rgb(132, 11, 42); --darkreader-inline-bgimage: radial-gradient(var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 0px, var(--darkreader-background-ffffff26, rgba(0, 0, 0, 0.15)) 30%, var(--darkreader-background-ffffff4d, rgba(0, 0, 0, 0.3)) 32%, var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 33%),  radial-gradient(var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 0px, var(--darkreader-background-ffffff1a, rgba(0, 0, 0, 0.1)) 11%, var(--darkreader-background-ffffff4d, rgba(0, 0, 0, 0.3)) 13%, var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 14%),  radial-gradient(var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 0px, var(--darkreader-background-ffffff33, rgba(0, 0, 0, 0.2)) 17%, var(--darkreader-background-ffffff6e, rgba(0, 0, 0, 0.43)) 19%, var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 20%),  radial-gradient(var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 0px, var(--darkreader-background-ffffff33, rgba(0, 0, 0, 0.2)) 11%, var(--darkreader-background-ffffff66, rgba(0, 0, 0, 0.4)) 13%, var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 14%),  radial-gradient(var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 0px, var(--darkreader-background-ffffff33, rgba(0, 0, 0, 0.2)) 11%, var(--darkreader-background-ffffff66, rgba(0, 0, 0, 0.4)) 13%, var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 14%),  radial-gradient(var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 0px, var(--darkreader-background-ffffff1a, rgba(0, 0, 0, 0.1)) 11%, var(--darkreader-background-ffffff33, rgba(0, 0, 0, 0.2)) 13%, var(--darkreader-background-ffffff00, rgba(0, 0, 0, 0)) 14%),  linear-gradient(45deg, var(--darkreader-background-343702, #080900) 0%, var(--darkreader-background-184500, #001000) 20%, var(--darkreader-background-187546, #194727) 30%, var(--darkreader-background-006782, #063942) 40%, var(--darkreader-background-0b1284, #000028) 50%, var(--darkreader-background-760ea1, #3a014b) 60%, var(--darkreader-background-83096e, #3c002c) 70%, var(--darkreader-background-840b2a, #360004) 80%, var(--darkreader-background-b13e12, #6f2e0e) 90%, var(--darkreader-background-e27412, #b06d29) 100%); --darkreader-inline-bgcolor: var(--darkreader-background-840b2a, #360004);
 }
+
+

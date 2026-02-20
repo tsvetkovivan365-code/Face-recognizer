@@ -1,12 +1,14 @@
 import Navigation from './components/Navigation/Navigation.jsx';
 import Logo from './components/Logo/Logo.jsx';
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm.jsx';
 
 function App() {
   return (
-    <div>
+    <section className='form h-screen'>
       <Navigation />
       <Logo />
-    </div>
+      <ImageLinkForm />
+    </section>
   )
 }
 
