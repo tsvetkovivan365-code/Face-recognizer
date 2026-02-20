@@ -1,4 +1,4 @@
-import eye from '../../../public/eye-scan-svgrepo-com.svg'
+import eye from '../assets/eye-scan-svgrepo-com.svg'
 export default function Logo() {
     return (
         <div className='m-4 mt-0 p-4'>
