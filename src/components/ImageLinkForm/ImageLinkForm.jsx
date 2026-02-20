@@ -1,6 +1,6 @@
 export default function ImageLinkForm() {
   return (
-    <section className="flex flex-col items-center justify-center mt-40 mx-5">
+    <section className="flex flex-col items-center justify-center mt-20 mx-5">
         <p className="text-2xl p-3 text-purple-700 dark:text-purple-800 sm:text-4xl">
             This special eye can detect faces in your pictures
         </p>
