@@ -2,23 +2,98 @@ import Navigation from './components/Navigation/Navigation.jsx';
 import Logo from './components/Logo/Logo.jsx';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm.jsx';
 import Rank from './components/Rank/Rank.jsx';
-import { useMemo, useEffect} from "react";
+import FaceRecognition from './components/FaceRecognition/FaceRecognition.jsx';
+import { useMemo, useEffect, useState} from "react";
 import Particles, {initParticlesEngine} from "@tsparticles/react";
 import { loadAll } from '@tsparticles/all';
 
-function App() {
+export default function App() {
+  const [input, setInput] = useState();
+  const [url, setURL] = useState();
 
+  // Setting input event handler
+  const onInputChange = (event) => {
+    setInput(event.target.value);
+  };
 
-  // this should be run only once per application lifetime
+  // Setting submit event handler
+  const onSubmit = () => {
+    setURL(input);
+
+    const PAT = import.meta.env.VITE_PAT;
+    const USER_ID = import.meta.env.VITE_USER_ID;
+    const APP_ID = import.meta.env.VITE_APP_ID;
+    
+    const MODEL_ID = 'face-detection';
+    const MODEL_VERSION_ID = import.meta.env.VITE_MODEL_VERSION_ID;
+;
+    const IMAGE_URL = url;
+
+    const raw = JSON.stringify({
+        "user_app_id": {
+            "user_id": USER_ID,
+            "app_id": APP_ID
+        },
+        "inputs": [
+            {
+                "data": {
+                    "image": {
+                        "url": IMAGE_URL
+                        // "base64": IMAGE_BYTES_STRING
+                    }
+                }
+            }
+        ]
+    });
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Key ' + PAT
+        },
+        body: raw
+    };
+
+    // Switch to the scoped URL format
+    fetch("/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result.status.code !== 10000) {
+                console.error("Clarifai API Error:", result.status.description);
+                console.log("Full Result:", result);
+                return;
+            }
+
+            const regions = result.outputs[0].data.regions;
+
+            regions.forEach(region => {
+                // Accessing and rounding the bounding box values
+                const boundingBox = region.region_info.bounding_box;
+                const topRow = boundingBox.top_row.toFixed(3);
+                const leftCol = boundingBox.left_col.toFixed(3);
+                const bottomRow = boundingBox.bottom_row.toFixed(3);
+                const rightCol = boundingBox.right_col.toFixed(3);
+
+                region.data.concepts.forEach(concept => {
+                    // Accessing and rounding the concept value
+                    const name = concept.name;
+                    const value = concept.value.toFixed(4);
+
+                    console.log(`${name}: ${value} BBox: ${topRow}, ${leftCol}, ${bottomRow}, ${rightCol}`);
+                    
+                });
+            });
+
+        })
+        .catch(error => console.log('error', error));
+
+  }
+
+  // Run effect only once
   useEffect(() => {
     initParticlesEngine(async (engine) => {
-      // you can initiate the tsParticles instance (engine) here, adding custom shapes or presets
-      // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-      // starting from v2 you can add only the features you need reducing the bundle size
-      //await loadAll(engine);
-      //await loadFull(engine);
       await loadAll(engine);
-      //await loadBasic(engine);
     });
   }, []);
 
@@ -108,9 +183,8 @@ function App() {
       <Navigation />
       <Logo />
       <Rank />
-      <ImageLinkForm />
+      <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit}/>
+      <FaceRecognition url={url}/>
     </section>
   )
 }
-
-export default App

@@ -8,5 +8,14 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    proxy: {
+      '/v2': {
+        target: 'https://api.clarifai.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/v2/, '/v2'),
+      },
+    },
+  }
   
 })
