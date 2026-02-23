@@ -9,16 +9,36 @@ import { loadAll } from '@tsparticles/all';
 
 export default function App() {
   const [input, setInput] = useState();
-  const [url, setURL] = useState();
+  const [imageURL, setImageURL] = useState();
+  const [box, setBox] = useState({});
 
   // Setting input event handler
   const onInputChange = (event) => {
     setInput(event.target.value);
   };
 
+  // Function for extracting the face's coordinates
+  const calculateFaceLocation = (data) => {
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('inputImage');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    return {
+      leftCol: clarifaiFace.left_col.toFixed(3) * width,
+      topRow: clarifaiFace.top_row.toFixed(3) * height,
+      rightCol: clarifaiFace.right_col.toFixed(3) * width,
+      bottomRow: clarifaiFace.bottom_row.toFixed(3) * height
+    }
+  }
+
+  // Function for storing the face's coordinates in state
+  const displayFaceBox = (box) => {
+    setBox({box: box});
+  }
+
   // Setting submit event handler
   const onSubmit = () => {
-    setURL(input);
+    setImageURL(input);
 
     const PAT = import.meta.env.VITE_PAT;
     const USER_ID = import.meta.env.VITE_USER_ID;
@@ -27,7 +47,7 @@ export default function App() {
     const MODEL_ID = 'face-detection';
     const MODEL_VERSION_ID = import.meta.env.VITE_MODEL_VERSION_ID;
 ;
-    const IMAGE_URL = url;
+    const IMAGE_URL = imageURL;
 
     const raw = JSON.stringify({
         "user_app_id": {
@@ -65,25 +85,7 @@ export default function App() {
                 return;
             }
 
-            const regions = result.outputs[0].data.regions;
-
-            regions.forEach(region => {
-                // Accessing and rounding the bounding box values
-                const boundingBox = region.region_info.bounding_box;
-                const topRow = boundingBox.top_row.toFixed(3);
-                const leftCol = boundingBox.left_col.toFixed(3);
-                const bottomRow = boundingBox.bottom_row.toFixed(3);
-                const rightCol = boundingBox.right_col.toFixed(3);
-
-                region.data.concepts.forEach(concept => {
-                    // Accessing and rounding the concept value
-                    const name = concept.name;
-                    const value = concept.value.toFixed(4);
-
-                    console.log(`${name}: ${value} BBox: ${topRow}, ${leftCol}, ${bottomRow}, ${rightCol}`);
-                    
-                });
-            });
+            displayFaceBox(calculateFaceLocation(result));
 
         })
         .catch(error => console.log('error', error));
@@ -184,7 +186,7 @@ export default function App() {
       <Logo />
       <Rank />
       <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit}/>
-      <FaceRecognition url={url}/>
+      <FaceRecognition box={box} imageURL={imageURL}/>
     </section>
   )
 }
