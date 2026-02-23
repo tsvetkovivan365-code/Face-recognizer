@@ -2,6 +2,8 @@ import Navigation from './components/Navigation/Navigation.jsx';
 import Logo from './components/Logo/Logo.jsx';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm.jsx';
 import Rank from './components/Rank/Rank.jsx';
+import Signin from './components/Signin/Signin.jsx';
+import Register from './components/Register/Register.jsx';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition.jsx';
 import { useMemo, useEffect, useState} from "react";
 import Particles, {initParticlesEngine} from "@tsparticles/react";
@@ -11,6 +13,8 @@ export default function App() {
   const [input, setInput] = useState();
   const [imageURL, setImageURL] = useState();
   const [box, setBox] = useState({});
+  const [route, setRoute] = useState('signin');
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   // Setting input event handler
   const onInputChange = (event) => {
@@ -174,7 +178,15 @@ export default function App() {
     [],
   );
 
-  
+  const onRouteChange = (route) => {
+    if (route === 'signout') {
+      setIsSignedIn(false);
+    } else if (route === 'home') {
+      setIsSignedIn(true);
+    }
+
+    setRoute(route);
+  }
 
   return (
     <section className='h-screen from-red-400 to-blue-700 via-olive-300 bg-linear-to-r'>
@@ -182,11 +194,20 @@ export default function App() {
         particlesLoaded={particlesLoaded}
         options={options}
       />
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit}/>
-      <FaceRecognition box={box} imageURL={imageURL}/>
+      <Navigation onRouteChange={onRouteChange} isSignedIn={isSignedIn}/>
+      {route === 'home' 
+        ? <>
+            <Logo />
+            <Rank />
+            <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit}/>
+            <FaceRecognition box={box} imageURL={imageURL}/>
+          </>
+        : (
+          route === 'signin' 
+            ? <Signin onRouteChange={onRouteChange} />
+            : <Register onRouteChange={onRouteChange} />
+        )
+      }
     </section>
   )
 }
